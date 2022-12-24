@@ -10,8 +10,9 @@ import UIKit
 class categoryCell: UITableViewCell {
 
     
-    @IBOutlet weak var categoryBackground: UIView!
-    @IBOutlet weak var categoryLbl: UILabel!
+    @IBOutlet var categoryLbl: UILabel!
+    @IBOutlet var categoryBackground: UIView!
+    @IBOutlet var editBtn: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
