@@ -22,7 +22,12 @@ class HomePageTableViewController: UITableViewController {
         tableView.backgroundView = background;
         
         
+        
+        
         getCategories();
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
     }
     func getCategories(){
         self.categories = ["Indian","American","Iranian","Mexican", "Jamaican", "Thai","Egyptian","Middeterian","Iraqi"]
@@ -39,12 +44,6 @@ class HomePageTableViewController: UITableViewController {
         return categories.count
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if(indexPath.row != categories.count-1){
-            
-        }else{
-            //self.navigationController?.pushViewController(AddCategory(), animated: true)
-            performSegue(withIdentifier: "AddCategory", sender: nil)
-        }
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "EditCategory" {
@@ -54,11 +53,8 @@ class HomePageTableViewController: UITableViewController {
             }
         }
     }
-    var alreadySet: [Int] = []
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath) as? categoryCell else { return UITableViewCell() }
-            
-            alreadySet.append(indexPath.row)
             
             cell.editBtn?.tag = indexPath.row;
             

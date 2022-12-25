@@ -13,9 +13,15 @@ class AddCategory: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.navigationController?.isNavigationBarHidden = false
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = false
+    }
+    @IBAction func saveChanges(_ sender: Any) {
+        
     }
     
-
     /*
     // MARK: - Navigation
 

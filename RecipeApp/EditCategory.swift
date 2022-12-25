@@ -9,11 +9,19 @@ import UIKit
 
 class EditCategory: UIViewController {
 
+    @IBOutlet weak var saveBtn: UIBarButtonItem!
+    @IBOutlet weak var categoryInput: UITextField!
     var categoryName : String = "";
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        categoryInput.text = categoryName;
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = false
+    }
+    @IBAction func saveChanges(_ sender: Any) {
+        
     }
     
 
