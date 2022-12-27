@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Recipe{
+struct Recipe: Decodable,Encodable{
     var image: String;
     var recipeName: String;
     var category: String;

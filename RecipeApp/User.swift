@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-struct User{
+struct User: Encodable,Decodable{
     var userId : String
     var userName : String
     var userPassword: String

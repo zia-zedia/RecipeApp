@@ -9,6 +9,7 @@ import UIKit
 
 class recipeList: UITableViewController {
     var recipes: [Recipe] = [];
+    var cat:Category? = nil;
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -20,13 +21,26 @@ class recipeList: UITableViewController {
         let background = UIImageView(image: UIImage(named:"background2.png"));
         background.contentMode = .scaleAspectFill;
         tableView.backgroundView = background;
+        
+        guard let categoryName = cat?.categoryName else{return}
+        self.title = categoryName
+        
         getRecipes()
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = false
     }
     func getRecipes(){
-        self.recipes = [Recipe(image: "tacos.jpg", recipeName: "Tacos", category: "Mexican", calories: 182, protein: 9, carb: 45, fat: 20, ingredients: "1lb ground beef \n 1 Tablespoon chilli powder \n 3/4 cup salt \n 1/2 cup tomato sauce", instructions: "put the meat in the oven, wait for 50 minutes then open the beef put inside tomato eat tomato then put tablespoon chilli powder inside tomato and put inside beef BOM tacos"),Recipe(image: "tacos.jpg", recipeName: "Tacos", category: "Mexican", calories: 182, protein: 9, carb: 45, fat: 20, ingredients: "1lb ground beef \n 1 Tablespoon chilli powder \n 3/4 cup salt \n 1/2 cup tomato sauce", instructions: "put the meat in the oven, wait for 50 minutes then open the beef put inside tomato eat tomato then put tablespoon chilli powder inside tomato and put inside beef BOM tacos"),Recipe(image: "tacos.jpg", recipeName: "Tacos", category: "Mexican", calories: 182, protein: 9, carb: 45, fat: 20, ingredients: "1lb ground beef \n 1 Tablespoon chilli powder \n 3/4 cup salt \n 1/2 cup tomato sauce", instructions: "put the meat in the oven, wait for 50 minutes then open the beef put inside tomato eat tomato then put tablespoon chilli powder inside tomato and put inside beef BOM tacos"),Recipe(image: "tacos.jpg", recipeName: "Tacos", category: "Mexican", calories: 182, protein: 9, carb: 45, fat: 20, ingredients: "1lb ground beef \n 1 Tablespoon chilli powder \n 3/4 cup salt \n 1/2 cup tomato sauce", instructions: "put the meat in the oven, wait for 50 minutes then open the beef put inside tomato eat tomato then put tablespoon chilli powder inside tomato and put inside beef BOM tacos"),Recipe(image: "tacos.jpg", recipeName: "Tacos", category: "Mexican", calories: 182, protein: 9, carb: 45, fat: 20, ingredients: "1lb ground beef \n 1 Tablespoon chilli powder \n 3/4 cup salt \n 1/2 cup tomato sauce", instructions: "put the meat in the oven, wait for 50 minutes then open the beef put inside tomato eat tomato then put tablespoon chilli powder inside tomato and put inside beef BOM tacos")]
+        guard let categoryId = cat?.categoryId else{return}
+        let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let archiveURL = documentDirectory.appendingPathComponent("Recipe_"+categoryId).appendingPathExtension("plist")
+        let propertyDecoder = PropertyListDecoder()
+        guard let retrievedRecipes = try? Data(contentsOf: archiveURL),
+              let decodedRecipes = try? propertyDecoder.decode(Array<Recipe>.self, from: retrievedRecipes)else {
+               return;
+        }
+        self.recipes = decodedRecipes;
+        
     }
     // MARK: - Table view data source
 
@@ -39,11 +53,17 @@ class recipeList: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         return recipes.count
     }
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "RecipeDetails" {
+            if let destinationVC = segue.destination as? RecipeDetails {
+                destinationVC.recipe = recipes[(sender as AnyObject).tag];
+            }
+        }
+    }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeCell", for: indexPath) as? RecipeCell else { return UITableViewCell() }
         
-        
+        cell.tag = indexPath.row
         cell.recipeName.text = recipes[indexPath.row].recipeName
         cell.recipeImage.image = UIImage(named:recipes[indexPath.row].image)
         cell.nutritionInfo.text = String(recipes[indexPath.row].calories)+" Calories"

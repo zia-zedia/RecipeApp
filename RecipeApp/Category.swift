@@ -7,8 +7,14 @@
 
 import Foundation
 
-struct Category{
+struct Category : Encodable, Decodable, Comparable{
+    static func < (lhs: Category, rhs: Category) -> Bool {
+        lhs.categoryName < rhs.categoryName
+    }
+    static func == (lhs: Category, rhs: Category) -> Bool {
+        lhs.categoryName == rhs.categoryName
+    }
     var categoryId : String
-    var cateogryName : String
+    var categoryName : String
 }
 

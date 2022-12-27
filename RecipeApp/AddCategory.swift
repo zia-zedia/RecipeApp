@@ -18,8 +18,23 @@ class AddCategory: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = false
     }
+    @IBOutlet weak var categoryName: UITextField!
     @IBAction func saveChanges(_ sender: Any) {
+        guard let categoryNameStr = categoryName.text else{return}
+        let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let archiveURL = documentDirectory.appendingPathComponent("categories").appendingPathExtension("plist")
+        let propertyDecoder = PropertyListDecoder()
+        guard let retrievedCategories = try? Data(contentsOf: archiveURL),
+              var decodedCategories = try? propertyDecoder.decode(Array<Category>.self, from: retrievedCategories)else {
+               return;
+        }
+        decodedCategories.append(Category(categoryId: String(UUID().uuidString.split(separator: "-")[0]), categoryName: categoryNameStr))
+        let propertyListEncoder = PropertyListEncoder()
+        let encodedData = try? propertyListEncoder.encode(decodedCategories)
+        try? encodedData?.write(to: archiveURL, options: .noFileProtection)
+        _ = navigationController?.popViewController(animated: true)
         
+        //create empty category file
     }
     
     /*

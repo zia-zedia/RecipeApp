@@ -8,6 +8,7 @@
 import UIKit
 
 class RecipeDetails: UITableViewController {
+    var recipe: Recipe? = nil;
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -19,6 +20,7 @@ class RecipeDetails: UITableViewController {
         let background = UIImageView(image: UIImage(named:"background3.png"));
         background.contentMode = .scaleAspectFill;
         tableView.backgroundView = background;
+        self.title = recipe?.recipeName
         
     }
 
@@ -40,20 +42,36 @@ class RecipeDetails: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if(indexPath.row == 0){
             let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeDetailsImageCell", for: indexPath) as! RecipeDetailsImageCell
+            if let recipeImage = recipe?.image{
+                cell.recipeImage.image = UIImage(named:recipeImage)
+            }
+            
             return cell
         }else if(indexPath.row == 1){
             let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeDetailsNutritionCell", for: indexPath) as! RecipeDetailsNutritionCell
+            if let calories = recipe?.calories{
+                cell.calories.text = String(calories)+" Calories"
+            }
+            if let fat = recipe?.fat{
+                cell.fat.text = String(fat)+"g Fat"
+            }
+            if let carb = recipe?.carb{
+                cell.carb.text = String(carb)+"g Carbohydrates"
+            }
+            if let protein = recipe?.protein{
+                cell.protein.text = String(protein)+"g Protein"
+            }
             return cell
         }else if(indexPath.row == 2){
             let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeDetailsIngredientsCell", for: indexPath) as! RecipeDetailsIngredientsCell
             
-            cell.ingredients.text = "Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label"
+            cell.ingredients.text = recipe?.ingredients
             cell.ingredients.sizeToFit()
             return cell
         }else{
             let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeDetailsInstructionsCell", for: indexPath) as! RecipeDetailsInstructionsCell
             
-            cell.instructions.text = "Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label"
+            cell.instructions.text = recipe?.instructions
             cell.instructions.sizeToFit()
             return cell
         }

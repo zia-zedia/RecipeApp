@@ -14,6 +14,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        func giveId() -> String {
+            return String(UUID().uuidString.split(separator: "-")[0])
+        }
+        /*
+        var arr: [Category] = [Category(categoryId: giveId(), categoryName: "Mexican"),Category(categoryId: giveId(), categoryName: "American"),Category(categoryId: giveId(), categoryName: "Indian"),Category(categoryId: giveId(), categoryName: "Egyptian")]
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let archiveURL = documentsDirectory.appendingPathComponent("categories").appendingPathExtension("plist")
+        let propertyListEncoder = PropertyListEncoder()
+        let encodedData = try? propertyListEncoder.encode(arr)
+        try? encodedData?.write(to: archiveURL, options: .noFileProtection)
+       */
+        
         return true
     }
 
@@ -30,6 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
+    
 
 
 }

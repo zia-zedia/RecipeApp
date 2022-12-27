@@ -8,7 +8,9 @@
 import UIKit
 
 class HomePageTableViewController: UITableViewController {
-    var categories: [String] = [];
+    var categories: [Category] = [];
+    
+    @IBOutlet weak var sortBtn: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -24,13 +26,70 @@ class HomePageTableViewController: UITableViewController {
         
         
         
-        getCategories();
+        getCategories("","ABC");
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
+        getCategories("","ABC");
     }
-    func getCategories(){
-        self.categories = ["Indian","American","Iranian","Mexican", "Jamaican", "Thai","Egyptian","Middeterian","Iraqi"]
+    
+    @IBAction func sortList(_ sender: Any) {
+        let alert = UIAlertController(
+            title: nil,
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+
+        alert.addAction(
+            .init(title: "Ascending", style: .default) { _ in
+                self.getCategories(self.searchBar.text ?? "","ABC");
+            }
+        )
+
+        alert.addAction(
+            .init(title: "Descending", style: .default) { _ in
+                self.getCategories(self.searchBar.text ?? "","ZYX");
+            }
+        )
+
+        present(alert, animated: true)
+    }
+    @IBOutlet weak var searchBar: UITextField!
+    @IBAction func searching(_ sender: Any) {
+        guard let searchStr = searchBar.text else {return}
+        
+        getCategories(searchStr.lowercased(),"ABC");
+    }
+    
+    func getCategories(_ searchStr:String, _ sortType:String){
+        let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let archiveURL = documentDirectory.appendingPathComponent("categories").appendingPathExtension("plist")
+        let propertyDecoder = PropertyListDecoder()
+        guard let retrievedCategories = try? Data(contentsOf: archiveURL),
+              let decodedCategories = try? propertyDecoder.decode(Array<Category>.self, from: retrievedCategories)else {
+               return;
+        }
+        if(searchStr == "" && sortType == "ABC"){
+            self.categories = decodedCategories.sorted(by: <)
+        }else if(searchStr == "" && sortType == "ZYX"){
+            self.categories = decodedCategories.sorted(by: >)
+        }else if(searchStr != "" && sortType == "ABC"){
+            self.categories = decodedCategories.sorted(by: <)
+            let filteredCategories = self.categories.filter{
+                $0.categoryName.lowercased().contains(searchStr)
+            }
+            self.categories = filteredCategories
+            
+        }else if(searchStr != "" && sortType == "ZYX"){
+            self.categories = decodedCategories.sorted(by: >)
+            let filteredCategories = self.categories.filter{
+                $0.categoryName.lowercased().contains(searchStr)
+            }
+            self.categories = filteredCategories
+        }
+        
+        tableView.reloadData()
+        
     }
 
     // MARK: - Table view data source
@@ -48,17 +107,21 @@ class HomePageTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "EditCategory" {
             if let destinationVC = segue.destination as? EditCategory {
-                destinationVC.categoryName = categories[(sender as AnyObject).tag];
-                print(categories[(sender as AnyObject).tag])
+                destinationVC.cat = categories[(sender as AnyObject).tag];
+            }
+        }else if segue.identifier == "recipeList" {
+            if let destinationVC = segue.destination as? recipeList {
+                destinationVC.cat = categories[(sender as AnyObject).tag];
+                
             }
         }
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath) as? categoryCell else { return UITableViewCell() }
             
-            cell.editBtn?.tag = indexPath.row;
-            
-            cell.categoryLbl.text = categories[indexPath.row]
+        cell.editBtn?.tag = indexPath.row;
+        cell.tag = indexPath.row;
+        cell.categoryLbl.text = categories[indexPath.row].categoryName
 
         
         // Configure the cell...
