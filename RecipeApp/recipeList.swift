@@ -10,6 +10,7 @@ import UIKit
 class recipeList: UITableViewController {
     var recipes: [Recipe] = [];
     var cat:Category? = nil;
+    var user:User? = nil;
     override func viewDidLoad() {
         super.viewDidLoad()
 

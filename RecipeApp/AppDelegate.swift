@@ -17,6 +17,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         func giveId() -> String {
             return String(UUID().uuidString.split(separator: "-")[0])
         }
+        
+        if !signedUp(){
+            let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            var archiveURL = documentsDirectory.appendingPathComponent("categories").appendingPathExtension("plist")
+            let propertyListEncoder = PropertyListEncoder()
+
+            var categoryArr: [Category] = [Category(categoryId: giveId(), categoryName: "Mexican"),Category(categoryId: giveId(), categoryName: "American"),Category(categoryId: giveId(), categoryName: "Pakistani"),Category(categoryId: giveId(), categoryName: "French")]
+            
+            let encodedCategoryData = try? propertyListEncoder.encode(categoryArr)
+            try? encodedCategoryData?.write(to: archiveURL, options: .noFileProtection)
+            
+            archiveURL = documentsDirectory.appendingPathComponent("users").appendingPathExtension("plist")
+            
+            var userArr: [User] = [User(userId: giveId(), userName: "admin", userPassword: "admin", userBio: "Admin", userImage: "user.png"),User(userId: giveId(), userName: "hamood", userPassword: "123", userBio: "hamood #EZ", userImage: "user.png")];
+            
+            let encodedUserData = try? propertyListEncoder.encode(userArr)
+            try? encodedUserData?.write(to: archiveURL, options: .noFileProtection)
+        }
+        
         /*
         var arr: [Category] = [Category(categoryId: giveId(), categoryName: "Mexican"),Category(categoryId: giveId(), categoryName: "American"),Category(categoryId: giveId(), categoryName: "Indian"),Category(categoryId: giveId(), categoryName: "Egyptian")]
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -25,10 +44,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let encodedData = try? propertyListEncoder.encode(arr)
         try? encodedData?.write(to: archiveURL, options: .noFileProtection)
        */
-        
+        /*var arr: [User] = [User(userId: giveId(), userName: "admin", userPassword: "admin", userBio: "Admin", userImage: "user.png"),User(userId: giveId(), userName: "hamood", userPassword: "123", userBio: "hamood #EZ", userImage: "user.png")];
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let archiveURL = documentsDirectory.appendingPathComponent("users").appendingPathExtension("plist")
+        let propertyListEncoder = PropertyListEncoder()
+        let encodedData = try? propertyListEncoder.encode(arr)
+        try? encodedData?.write(to: archiveURL, options: .noFileProtection)
+        */
         return true
     }
-
+    
+    func signedUp()->Bool{
+            let defaults = UserDefaults.standard
+            
+            if defaults.bool(forKey: "signedUp"){
+                return true
+            }else{
+                return false
+            }
+        }
     // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {

@@ -9,7 +9,7 @@ import UIKit
 
 class HomePageTableViewController: UITableViewController {
     var categories: [Category] = [];
-    
+    var user:User? = nil;
     @IBOutlet weak var sortBtn: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,6 +112,12 @@ class HomePageTableViewController: UITableViewController {
         }else if segue.identifier == "recipeList" {
             if let destinationVC = segue.destination as? recipeList {
                 destinationVC.cat = categories[(sender as AnyObject).tag];
+                destinationVC.user = user;
+                
+            }
+        }else if segue.identifier == "AddCategory"{
+            if let destinationVC = segue.destination as? AddCategory {
+                destinationVC.user = user;
                 
             }
         }

@@ -8,7 +8,7 @@
 import UIKit
 
 class AddCategory: UIViewController {
-
+    var user:User? = nil;
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -19,6 +19,18 @@ class AddCategory: UIViewController {
         self.navigationController?.isNavigationBarHidden = false
     }
     @IBOutlet weak var categoryName: UITextField!
+    
+    func createCategoryFile(_ newId:String){
+        guard let userId = self.user?.userId else{return}
+        let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let archiveURL = documentDirectory.appendingPathComponent("Recipe_"+newId+"_"+userId).appendingPathExtension("plist")
+        let propertyListEncoder = PropertyListEncoder()
+        let newEmptyRecipeList:[Recipe] = [];
+        let encodedData = try? propertyListEncoder.encode(newEmptyRecipeList)
+        try? encodedData?.write(to: archiveURL, options: .noFileProtection)
+        _ = navigationController?.popViewController(animated: true)
+    }
+    
     @IBAction func saveChanges(_ sender: Any) {
         guard let categoryNameStr = categoryName.text else{return}
         let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -28,13 +40,14 @@ class AddCategory: UIViewController {
               var decodedCategories = try? propertyDecoder.decode(Array<Category>.self, from: retrievedCategories)else {
                return;
         }
-        decodedCategories.append(Category(categoryId: String(UUID().uuidString.split(separator: "-")[0]), categoryName: categoryNameStr))
+        let newId = String(UUID().uuidString.split(separator: "-")[0])
+        decodedCategories.append(Category(categoryId: newId, categoryName: categoryNameStr))
         let propertyListEncoder = PropertyListEncoder()
         let encodedData = try? propertyListEncoder.encode(decodedCategories)
         try? encodedData?.write(to: archiveURL, options: .noFileProtection)
         _ = navigationController?.popViewController(animated: true)
         
-        //create empty category file
+        createCategoryFile(newId)
     }
     
     /*

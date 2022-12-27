@@ -18,12 +18,13 @@
 		D13246C22959F54E0055D823 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13246C12959F54E0055D823 /* User.swift */; };
 		D13246C42959F5E10055D823 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13246C32959F5E10055D823 /* Category.swift */; };
 		D13246C82959F8930055D823 /* RecipeDetailsInstructionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13246C72959F8930055D823 /* RecipeDetailsInstructionsCell.swift */; };
+		D13246CC295B4D2E0055D823 /* UserLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13246CB295B4D2E0055D823 /* UserLogin.swift */; };
+		D13246CE295B5E3D0055D823 /* UserSignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13246CD295B5E3C0055D823 /* UserSignUp.swift */; };
 		D1502E0F29577C620015FFA0 /* recipeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1502E0E29577C620015FFA0 /* recipeList.swift */; };
 		D1502E1129577CC40015FFA0 /* RecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1502E1029577CC40015FFA0 /* RecipeCell.swift */; };
 		D1502E1329577ED20015FFA0 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1502E1229577ED20015FFA0 /* Recipe.swift */; };
 		D1DC22DB2954C7A200FA18DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DC22DA2954C7A200FA18DA /* AppDelegate.swift */; };
 		D1DC22DD2954C7A200FA18DA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DC22DC2954C7A200FA18DA /* SceneDelegate.swift */; };
-		D1DC22DF2954C7A200FA18DA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DC22DE2954C7A200FA18DA /* ViewController.swift */; };
 		D1DC22E22954C7A200FA18DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1DC22E02954C7A200FA18DA /* Main.storyboard */; };
 		D1DC22E42954C7A600FA18DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D1DC22E32954C7A600FA18DA /* Assets.xcassets */; };
 		D1DC22E72954C7A600FA18DA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1DC22E52954C7A600FA18DA /* LaunchScreen.storyboard */; };
@@ -41,13 +42,14 @@
 		D13246C12959F54E0055D823 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D13246C32959F5E10055D823 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		D13246C72959F8930055D823 /* RecipeDetailsInstructionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailsInstructionsCell.swift; sourceTree = "<group>"; };
+		D13246CB295B4D2E0055D823 /* UserLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLogin.swift; sourceTree = "<group>"; };
+		D13246CD295B5E3C0055D823 /* UserSignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSignUp.swift; sourceTree = "<group>"; };
 		D1502E0E29577C620015FFA0 /* recipeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recipeList.swift; sourceTree = "<group>"; };
 		D1502E1029577CC40015FFA0 /* RecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCell.swift; sourceTree = "<group>"; };
 		D1502E1229577ED20015FFA0 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		D1DC22D72954C7A200FA18DA /* RecipeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RecipeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1DC22DA2954C7A200FA18DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D1DC22DC2954C7A200FA18DA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		D1DC22DE2954C7A200FA18DA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D1DC22E12954C7A200FA18DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D1DC22E32954C7A600FA18DA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D1DC22E62954C7A600FA18DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -86,7 +88,6 @@
 			children = (
 				D1DC22DA2954C7A200FA18DA /* AppDelegate.swift */,
 				D1DC22DC2954C7A200FA18DA /* SceneDelegate.swift */,
-				D1DC22DE2954C7A200FA18DA /* ViewController.swift */,
 				D1DC22E02954C7A200FA18DA /* Main.storyboard */,
 				D1DC22E32954C7A600FA18DA /* Assets.xcassets */,
 				D1DC22E52954C7A600FA18DA /* LaunchScreen.storyboard */,
@@ -105,6 +106,8 @@
 				D13246C12959F54E0055D823 /* User.swift */,
 				D13246C32959F5E10055D823 /* Category.swift */,
 				D13246C72959F8930055D823 /* RecipeDetailsInstructionsCell.swift */,
+				D13246CB295B4D2E0055D823 /* UserLogin.swift */,
+				D13246CD295B5E3C0055D823 /* UserSignUp.swift */,
 			);
 			path = RecipeApp;
 			sourceTree = "<group>";
@@ -180,8 +183,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D1DC22DF2954C7A200FA18DA /* ViewController.swift in Sources */,
 				D1DC22DB2954C7A200FA18DA /* AppDelegate.swift in Sources */,
+				D13246CC295B4D2E0055D823 /* UserLogin.swift in Sources */,
 				D1DC22DD2954C7A200FA18DA /* SceneDelegate.swift in Sources */,
 				D13246BE295903B00055D823 /* RecipeDetailsIngredientsCell.swift in Sources */,
 				D1502E1129577CC40015FFA0 /* RecipeCell.swift in Sources */,
@@ -190,6 +193,7 @@
 				D13246C42959F5E10055D823 /* Category.swift in Sources */,
 				D1032AE4295621600092E64B /* categoryCell.swift in Sources */,
 				D13246C22959F54E0055D823 /* User.swift in Sources */,
+				D13246CE295B5E3D0055D823 /* UserSignUp.swift in Sources */,
 				D1032AEA295645C00092E64B /* EditCategory.swift in Sources */,
 				D1032AE629563F4F0092E64B /* AddCategory.swift in Sources */,
 				D13246BC295903720055D823 /* RecipeDetailsNutritionCell.swift in Sources */,
