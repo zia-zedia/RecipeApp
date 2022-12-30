@@ -16,11 +16,11 @@ struct Recipe: Decodable,Encodable,Comparable{
     }
     
     static func calSort (lhs: Recipe, rhs: Recipe) -> Bool {
-        lhs.calories > rhs.calories
+        lhs.calories < rhs.calories
     }
     
     static func carbSort (lhs: Recipe, rhs: Recipe) -> Bool {
-        lhs.carb > rhs.carb
+        lhs.carb < rhs.carb
     }
     
     static func proteinSort (lhs: Recipe, rhs: Recipe) -> Bool {
@@ -28,12 +28,13 @@ struct Recipe: Decodable,Encodable,Comparable{
     }
     
     static func fatSort (lhs: Recipe, rhs: Recipe) -> Bool {
-        lhs.fat > rhs.fat
+        lhs.fat < rhs.fat
     }
-    
+    var recipeId:String;
     var image: String;
     var recipeName: String;
     var category: String;
+    var servingSize: String;
     
     var calories: Int;
     var protein: Int;

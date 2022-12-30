@@ -1,14 +1,14 @@
 //
-//  RecipeDetails.swift
+//  EditRecipe.swift
 //  RecipeApp
 //
-//  Created by moh on 26/12/2022.
+//  Created by moh on 29/12/2022.
 //
 
 import UIKit
 
-class RecipeDetails: UITableViewController {
-    var recipe: Recipe? = nil;
+class EditRecipe: UITableViewController {
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -20,20 +20,10 @@ class RecipeDetails: UITableViewController {
         let background = UIImageView(image: UIImage(named:"background3.png"));
         background.contentMode = .scaleAspectFill;
         tableView.backgroundView = background;
-        self.title = recipe?.recipeName
-        
     }
 
     // MARK: - Table view data source
-    override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = false
-    }
-    func getSavedImage(named: String) -> UIImage? {
-        if let dir = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) {
-            return UIImage(contentsOfFile: URL(fileURLWithPath: dir.absoluteString).appendingPathComponent(named).path)
-        }
-        return nil
-    }
+
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -41,56 +31,36 @@ class RecipeDetails: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 4
+        return 6
     }
 
-
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         if(indexPath.row == 0){
-            let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeDetailsImageCell", for: indexPath) as! RecipeDetailsImageCell
-            if let recipeImage = recipe?.image{
-                cell.recipeImage.image = getSavedImage(named:recipeImage)
-            }
+            let cell = tableView.dequeueReusableCell(withIdentifier: "EditRecipeImageCell", for: indexPath) as! EditRecipeImageCell
             
             return cell
         }else if(indexPath.row == 1){
-            let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeDetailsNutritionCell", for: indexPath) as! RecipeDetailsNutritionCell
-            if let calories = recipe?.calories{
-                cell.calories.text = String(calories)+" Calories"
-            }
-            if let fat = recipe?.fat{
-                cell.fat.text = String(fat)+"g Fat"
-            }
-            if let carb = recipe?.carb{
-                cell.carb.text = String(carb)+"g Carbohydrates"
-            }
-            if let protein = recipe?.protein{
-                cell.protein.text = String(protein)+"g Protein"
-            }
-            if let servingSize = recipe?.servingSize{
-                cell.servingSize.text = String(servingSize)
-            }
+            let cell = tableView.dequeueReusableCell(withIdentifier: "EditRecipeNameCell", for: indexPath) as! EditRecipeNameCell
             return cell
         }else if(indexPath.row == 2){
-            let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeDetailsIngredientsCell", for: indexPath) as! RecipeDetailsIngredientsCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "EditRecipeCategoryCell", for: indexPath) as! EditRecipeCategoryCell
             
-            cell.ingredients.text = recipe?.ingredients
-            cell.ingredients.sizeToFit()
+            return cell
+        }else if(indexPath.row == 3){
+            let cell = tableView.dequeueReusableCell(withIdentifier: "EditRecipeNutritionCell", for: indexPath) as! EditRecipeNutritionCell
+            
+            return cell
+        }else if(indexPath.row == 4){
+            let cell = tableView.dequeueReusableCell(withIdentifier: "EditRecipeingredientsCell", for: indexPath) as! EditRecipeingredientsCell
+            
             return cell
         }else{
-            let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeDetailsInstructionsCell", for: indexPath) as! RecipeDetailsInstructionsCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "EditRecipeInstructionsCell", for: indexPath) as! EditRecipeInstructionsCell
             
-            cell.instructions.text = recipe?.instructions
-            cell.instructions.sizeToFit()
             return cell
         }
-
-
-        // Configure the cell...
-
-        
     }
-
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

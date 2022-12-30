@@ -49,7 +49,7 @@ class UserLogin: UIViewController {
                 self.present(alert, animated: true, completion: nil)
                 return;
             }
-            if let destinationVC = segue.destination as? HomePageTableViewController {
+            if let destinationVC = segue.destination as? RecipeAppTab {
                 
                 destinationVC.user = user
             }

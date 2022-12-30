@@ -1,24 +1,20 @@
 //
-//  RecipeDetailsNutritionCell.swift
+//  AddRecipeInstructionsCell.swift
 //  RecipeApp
 //
-//  Created by moh on 26/12/2022.
+//  Created by moh on 29/12/2022.
 //
 
 import UIKit
 
-class RecipeDetailsNutritionCell: UITableViewCell {
+class AddRecipeInstructionsCell: UITableViewCell {
 
-    @IBOutlet weak var servingSize: UILabel!
-    @IBOutlet weak var protein: UILabel!
-    @IBOutlet weak var carb: UILabel!
-    @IBOutlet weak var fat: UILabel!
-    @IBOutlet weak var calories: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
 
+    @IBOutlet weak var instructionsInput: UITextView!
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

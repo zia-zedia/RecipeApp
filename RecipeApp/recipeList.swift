@@ -11,6 +11,7 @@ class recipeList: UITableViewController {
     var recipes: [Recipe] = [];
     var cat:Category? = nil;
     var user:User? = nil;
+    var sortMode = "cal"
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -26,12 +27,62 @@ class recipeList: UITableViewController {
         guard let categoryName = cat?.categoryName else{return}
         self.title = categoryName
         
-        getRecipes()
+        getRecipes("","cal")
+    }
+    
+    @IBOutlet weak var searchBar: UITextField!
+    @IBAction func searching(_ sender: Any) {
+        guard let searchStr = searchBar.text else {return}
+        getRecipes(searchStr.lowercased(),sortMode)
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = false
     }
-    func getRecipes(){
+    func getSavedImage(named: String) -> UIImage? {
+        if let dir = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) {
+            return UIImage(contentsOfFile: URL(fileURLWithPath: dir.absoluteString).appendingPathComponent(named).path)
+        }
+        return nil
+    }
+    @IBAction func sortList(_ sender: Any) {
+        let alert = UIAlertController(
+            title: nil,
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+
+        alert.addAction(
+            .init(title: "Calories", style: .default) { _ in
+                self.sortMode = "cal";
+                self.getRecipes(self.searchBar.text ?? "",self.sortMode);
+            }
+        )
+
+        alert.addAction(
+            .init(title: "Carbohydrates", style: .default) { _ in
+                self.sortMode = "carb";
+                self.getRecipes(self.searchBar.text ?? "",self.sortMode);
+                
+            }
+        )
+        alert.addAction(
+            .init(title: "Fats", style: .default) { _ in
+                self.sortMode = "fat";
+                self.getRecipes(self.searchBar.text ?? "",self.sortMode);
+                
+            }
+        )
+        alert.addAction(
+            .init(title: "Protein", style: .default) { _ in
+                self.sortMode = "pro";
+                self.getRecipes(self.searchBar.text ?? "",self.sortMode);
+                
+            }
+        )
+
+        present(alert, animated: true)
+    }
+    func getRecipes(_ searchStr:String, _ sortType:String){
         guard let categoryId = cat?.categoryId else{return}
         let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let archiveURL = documentDirectory.appendingPathComponent("Recipe_"+categoryId).appendingPathExtension("plist")
@@ -40,7 +91,54 @@ class recipeList: UITableViewController {
               let decodedRecipes = try? propertyDecoder.decode(Array<Recipe>.self, from: retrievedRecipes)else {
                return;
         }
-        self.recipes = decodedRecipes;
+        if(searchStr == "" && sortType == "cal"){
+            self.recipes = decodedRecipes.sorted(by: Recipe.calSort)
+        }else if(searchStr == "" && sortType == "carb"){
+            
+            self.recipes = decodedRecipes.sorted(by: Recipe.carbSort)
+            
+        }else if(searchStr == "" && sortType == "fat"){
+            self.recipes = decodedRecipes.sorted(by: Recipe.fatSort)
+        }else if(searchStr == "" && sortType == "pro"){
+            self.recipes = decodedRecipes.sorted(by: Recipe.proteinSort)
+        }else if(searchStr != "" && sortType == "cal"){
+            self.recipes = decodedRecipes.sorted(by: Recipe.calSort)
+            
+            let filteredRecipes = self.recipes.filter{
+                $0.recipeName.lowercased().contains(searchStr)
+            }
+            
+            self.recipes = filteredRecipes
+            
+        }else if(searchStr != "" && sortType == "carb"){
+            self.recipes = decodedRecipes.sorted(by: Recipe.carbSort)
+            
+            let filteredRecipes = self.recipes.filter{
+                $0.recipeName.lowercased().contains(searchStr)
+            }
+            
+            self.recipes = filteredRecipes
+            
+        }else if(searchStr != "" && sortType == "fat"){
+            self.recipes = decodedRecipes.sorted(by: Recipe.fatSort)
+            
+            let filteredRecipes = self.recipes.filter{
+                $0.recipeName.lowercased().contains(searchStr)
+            }
+            
+            self.recipes = filteredRecipes
+            
+        }else if(searchStr != "" && sortType == "pro"){
+            self.recipes = decodedRecipes.sorted(by: Recipe.proteinSort)
+            
+            let filteredRecipes = self.recipes.filter{
+                $0.recipeName.lowercased().contains(searchStr)
+            }
+            
+            self.recipes = filteredRecipes
+            
+        }
+        tableView.reloadData()
         
     }
     // MARK: - Table view data source
@@ -66,8 +164,17 @@ class recipeList: UITableViewController {
         
         cell.tag = indexPath.row
         cell.recipeName.text = recipes[indexPath.row].recipeName
-        cell.recipeImage.image = UIImage(named:recipes[indexPath.row].image)
-        cell.nutritionInfo.text = String(recipes[indexPath.row].calories)+" Calories"
+        cell.recipeImage.image = getSavedImage(named:recipes[indexPath.row].image)
+        if(sortMode == "cal"){
+            cell.nutritionInfo.text = String(recipes[indexPath.row].calories)+"g Calories"
+        }else if(sortMode == "carb"){
+            cell.nutritionInfo.text = String(recipes[indexPath.row].carb)+"g Carbohydrate"
+        }else if(sortMode == "fat"){
+            cell.nutritionInfo.text = String(recipes[indexPath.row].fat)+"g Fat"
+        }else if(sortMode == "pro"){
+            cell.nutritionInfo.text = String(recipes[indexPath.row].protein)+"g Protein"
+        }
+
         
         // Configure the cell...
 

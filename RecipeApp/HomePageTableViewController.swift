@@ -10,6 +10,7 @@ import UIKit
 class HomePageTableViewController: UITableViewController {
     var categories: [Category] = [];
     var user:User? = nil;
+    var sortMode = "ABC"
     @IBOutlet weak var sortBtn: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,12 +44,14 @@ class HomePageTableViewController: UITableViewController {
         alert.addAction(
             .init(title: "Ascending", style: .default) { _ in
                 self.getCategories(self.searchBar.text ?? "","ABC");
+                self.sortMode = "ABC"
             }
         )
 
         alert.addAction(
             .init(title: "Descending", style: .default) { _ in
                 self.getCategories(self.searchBar.text ?? "","ZYX");
+                self.sortMode = "ZYX"
             }
         )
 
@@ -58,17 +61,19 @@ class HomePageTableViewController: UITableViewController {
     @IBAction func searching(_ sender: Any) {
         guard let searchStr = searchBar.text else {return}
         
-        getCategories(searchStr.lowercased(),"ABC");
+        getCategories(searchStr.lowercased(),sortMode);
     }
     
     func getCategories(_ searchStr:String, _ sortType:String){
+        guard let userId = user?.userId else{return}
         let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let archiveURL = documentDirectory.appendingPathComponent("categories").appendingPathExtension("plist")
+        let archiveURL = documentDirectory.appendingPathComponent("categories_"+userId).appendingPathExtension("plist")
         let propertyDecoder = PropertyListDecoder()
         guard let retrievedCategories = try? Data(contentsOf: archiveURL),
               let decodedCategories = try? propertyDecoder.decode(Array<Category>.self, from: retrievedCategories)else {
                return;
         }
+        
         if(searchStr == "" && sortType == "ABC"){
             self.categories = decodedCategories.sorted(by: <)
         }else if(searchStr == "" && sortType == "ZYX"){
@@ -107,6 +112,7 @@ class HomePageTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "EditCategory" {
             if let destinationVC = segue.destination as? EditCategory {
+                destinationVC.user = user;
                 destinationVC.cat = categories[(sender as AnyObject).tag];
             }
         }else if segue.identifier == "recipeList" {

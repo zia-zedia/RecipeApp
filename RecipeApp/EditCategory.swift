@@ -14,6 +14,7 @@ class EditCategory: UIViewController {
     @IBOutlet weak var saveBtn: UIBarButtonItem!
     @IBOutlet weak var categoryInput: UITextField!
     var cat:Category? = nil;
+    var user:User? = nil;
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -25,15 +26,17 @@ class EditCategory: UIViewController {
     }
     @IBAction func saveChanges(_ sender: Any) {
         guard let categoryNameStr = categoryInput.text else{return}
+        guard let catIdStr = cat?.categoryId else{return}
+        guard let userId = self.user?.userId else{return}
         let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let archiveURL = documentDirectory.appendingPathComponent("categories").appendingPathExtension("plist")
+        let archiveURL = documentDirectory.appendingPathComponent("categories_"+userId).appendingPathExtension("plist")
         let propertyDecoder = PropertyListDecoder()
         guard let retrievedCategories = try? Data(contentsOf: archiveURL),
               var decodedCategories = try? propertyDecoder.decode(Array<Category>.self, from: retrievedCategories)else {
                return;
         }
         for a in 0...decodedCategories.count-1{
-            if(decodedCategories[a].categoryId == cat?.categoryId){
+            if(decodedCategories[a].categoryId == catIdStr){
                 decodedCategories[a].categoryName = categoryNameStr
             }
         }
@@ -44,16 +47,17 @@ class EditCategory: UIViewController {
     }
     
     @IBAction func deleteRecipe(_ sender: Any) {
-        
+        guard let userId = self.user?.userId else{return}
+        guard let catIdStr = cat?.categoryId else{return}
         let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let archiveURL = documentDirectory.appendingPathComponent("categories").appendingPathExtension("plist")
+        let archiveURL = documentDirectory.appendingPathComponent("categories_"+userId).appendingPathExtension("plist")
         let propertyDecoder = PropertyListDecoder()
         guard let retrievedCategories = try? Data(contentsOf: archiveURL),
               var decodedCategories = try? propertyDecoder.decode(Array<Category>.self, from: retrievedCategories)else {
                return;
         }
         decodedCategories = decodedCategories.filter{
-            $0.categoryId != cat?.categoryId
+            $0.categoryId != catIdStr
         }
         let propertyListEncoder = PropertyListEncoder()
         let encodedData = try? propertyListEncoder.encode(decodedCategories)
