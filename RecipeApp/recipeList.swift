@@ -37,6 +37,7 @@ class recipeList: UITableViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = false
+        getRecipes("","cal")
     }
     func getSavedImage(named: String) -> UIImage? {
         if let dir = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) {
@@ -84,8 +85,9 @@ class recipeList: UITableViewController {
     }
     func getRecipes(_ searchStr:String, _ sortType:String){
         guard let categoryId = cat?.categoryId else{return}
+        guard let userId = user?.userId else{return}
         let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let archiveURL = documentDirectory.appendingPathComponent("Recipe_"+categoryId).appendingPathExtension("plist")
+        let archiveURL = documentDirectory.appendingPathComponent("Recipe_"+categoryId+"_"+userId).appendingPathExtension("plist")
         let propertyDecoder = PropertyListDecoder()
         guard let retrievedRecipes = try? Data(contentsOf: archiveURL),
               let decodedRecipes = try? propertyDecoder.decode(Array<Recipe>.self, from: retrievedRecipes)else {
@@ -157,16 +159,24 @@ class recipeList: UITableViewController {
             if let destinationVC = segue.destination as? RecipeDetails {
                 destinationVC.recipe = recipes[(sender as AnyObject).tag];
             }
+        }else if segue.identifier == "EditRecipe" {
+            
+            if let destinationVC = segue.destination as? EditRecipe {
+                destinationVC.recipe = recipes[(sender as AnyObject).tag];
+                destinationVC.cat = cat;
+                destinationVC.user = user;
+            }
         }
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeCell", for: indexPath) as? RecipeCell else { return UITableViewCell() }
         
         cell.tag = indexPath.row
+        cell.editBtn.tag = indexPath.row
         cell.recipeName.text = recipes[indexPath.row].recipeName
         cell.recipeImage.image = getSavedImage(named:recipes[indexPath.row].image)
         if(sortMode == "cal"){
-            cell.nutritionInfo.text = String(recipes[indexPath.row].calories)+"g Calories"
+            cell.nutritionInfo.text = String(recipes[indexPath.row].calories)+" Calories"
         }else if(sortMode == "carb"){
             cell.nutritionInfo.text = String(recipes[indexPath.row].carb)+"g Carbohydrate"
         }else if(sortMode == "fat"){

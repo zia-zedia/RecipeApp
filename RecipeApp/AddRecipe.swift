@@ -92,6 +92,7 @@ class AddRecipe: UITableViewController, UINavigationControllerDelegate, UIImageP
         present(alert, animated: true)
     }
     @objc func submitBtnTapped(sender: UITapGestureRecognizer) {
+        guard let userId = user?.userId else{return}
         recipe.recipeName = recipeName?.text ?? "Recipe Name"
         recipe.calories = Int(calories?.text ?? "") ?? 0
         recipe.carb = Int(carb?.text ?? "") ?? 0
@@ -101,7 +102,7 @@ class AddRecipe: UITableViewController, UINavigationControllerDelegate, UIImageP
         recipe.ingredients = ingredients?.text ?? ""
         
         let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let archiveURL = documentDirectory.appendingPathComponent("Recipe_"+recipe.category).appendingPathExtension("plist")
+        let archiveURL = documentDirectory.appendingPathComponent("Recipe_"+recipe.category+"_"+userId).appendingPathExtension("plist")
         let propertyDecoder = PropertyListDecoder()
         guard let retrievedRecipes = try? Data(contentsOf: archiveURL),
               var decodedRecipes = try? propertyDecoder.decode(Array<Recipe>.self, from: retrievedRecipes)else {

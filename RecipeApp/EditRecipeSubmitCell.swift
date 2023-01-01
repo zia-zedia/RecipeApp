@@ -1,20 +1,20 @@
 //
-//  EditRecipeingredientsCell.swift
+//  EditRecipeSubmitCell.swift
 //  RecipeApp
 //
-//  Created by moh on 29/12/2022.
+//  Created by moh on 01/01/2023.
 //
 
 import UIKit
 
-class EditRecipeingredientsCell: UITableViewCell {
+class EditRecipeSubmitCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
 
-    @IBOutlet weak var ingredientsInput: UITextView!
+    @IBOutlet weak var submitBtn: UIButton!
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

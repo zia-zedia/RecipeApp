@@ -10,6 +10,7 @@ import UIKit
 class RecipeCell: UITableViewCell {
 
 
+    @IBOutlet weak var editBtn: UIButton!
     @IBOutlet weak var shadowBackground: UIView!
     @IBOutlet weak var nutritionInfo: UILabel!
     @IBOutlet weak var recipeImage: UIImageView!

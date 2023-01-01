@@ -13,7 +13,12 @@ class EditRecipeNutritionCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
+    @IBOutlet weak var caloriesInput: UITextField!
+    
+    @IBOutlet weak var proteinInput: UITextField!
+    @IBOutlet weak var fatsInput: UITextField!
+    @IBOutlet weak var carbInput: UITextField!
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

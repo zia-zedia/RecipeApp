@@ -14,6 +14,7 @@ class EditRecipeNameCell: UITableViewCell {
         // Initialization code
     }
 
+    @IBOutlet weak var recipeName: UITextField!
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

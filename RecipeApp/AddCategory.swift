@@ -20,11 +20,6 @@ class AddCategory: UIViewController {
         self.navigationController?.isNavigationBarHidden = false
     }
     @IBOutlet weak var categoryName: UITextField!
-    @objc func imageTapped(sender: UITapGestureRecognizer) {
-            if sender.state == .ended {
-                    print("UIImageView tapped")
-            }
-    }
     func createCategoryFile(_ newId:String){
         guard let userId = self.user?.userId else{return}
         let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!

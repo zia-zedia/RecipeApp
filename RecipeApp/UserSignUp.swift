@@ -39,7 +39,7 @@ class UserSignUp: UIViewController {
         var archiveURL = documentDirectory.appendingPathComponent("categories").appendingPathExtension("plist")
         let propertyDecoder = PropertyListDecoder()
         guard let retrievedCategories = try? Data(contentsOf: archiveURL),
-              var decodedCategories = try? propertyDecoder.decode(Array<Category>.self, from: retrievedCategories)else {
+              let decodedCategories = try? propertyDecoder.decode(Array<Category>.self, from: retrievedCategories)else {
                return;
         }
         for cat in decodedCategories{

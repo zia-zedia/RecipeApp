@@ -14,6 +14,7 @@ class EditRecipeInstructionsCell: UITableViewCell {
         // Initialization code
     }
 
+    @IBOutlet weak var instructionsInput: UITextView!
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
