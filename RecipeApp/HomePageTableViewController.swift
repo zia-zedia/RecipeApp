@@ -31,6 +31,7 @@ class HomePageTableViewController: UITableViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
+        
         getCategories("","ABC");
     }
     

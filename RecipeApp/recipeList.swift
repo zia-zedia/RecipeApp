@@ -11,7 +11,7 @@ class recipeList: UITableViewController {
     var recipes: [Recipe] = [];
     var cat:Category? = nil;
     var user:User? = nil;
-    var sortMode = "cal"
+    var sortMode = String(UserDefaults.standard.string(forKey: "sortMode") ?? "cal")
     override func viewDidLoad() {
         super.viewDidLoad()
 

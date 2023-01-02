@@ -22,7 +22,8 @@ class EditCategory: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = false
-        self.tabBarController?.tabBar.isHidden = true;
+        
+        
     }
     @IBAction func saveChanges(_ sender: Any) {
         guard let categoryNameStr = categoryInput.text else{return}

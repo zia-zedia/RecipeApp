@@ -25,7 +25,9 @@ class AddRecipe: UITableViewController, UINavigationControllerDelegate, UIImageP
         
     }
     
-    
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
     
     var recipeImage: UIImageView? = nil;
     var categoryBtn: UIButton? = nil;
@@ -100,19 +102,36 @@ class AddRecipe: UITableViewController, UINavigationControllerDelegate, UIImageP
         recipe.fat = Int(fats?.text ?? "") ?? 0
         recipe.instructions = instructions?.text ?? ""
         recipe.ingredients = ingredients?.text ?? ""
+        if(recipe.image == "default.jpeg"){
+            saveImage(image: UIImage(named:"default.jpeg")!, name: String(UUID().uuidString.split(separator: "-")[0])+".png")
+        }
         
         let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let archiveURL = documentDirectory.appendingPathComponent("Recipe_"+recipe.category+"_"+userId).appendingPathExtension("plist")
         let propertyDecoder = PropertyListDecoder()
         guard let retrievedRecipes = try? Data(contentsOf: archiveURL),
               var decodedRecipes = try? propertyDecoder.decode(Array<Recipe>.self, from: retrievedRecipes)else {
+            let alert = UIAlertController(title: "Error", message: "Please select a category", preferredStyle: UIAlertController.Style.alert)
+
+                    // add an action (button)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+
+                    // show the alert
+                    self.present(alert, animated: true, completion: nil)
                return;
         }
         decodedRecipes.append(recipe)
         let propertyListEncoder = PropertyListEncoder()
         let encodedData = try? propertyListEncoder.encode(decodedRecipes)
         try? encodedData?.write(to: archiveURL, options: .noFileProtection)
-        
+        recipeName?.text = ""
+        calories?.text = ""
+        carb?.text = ""
+        protein?.text = ""
+        fats?.text = ""
+        instructions?.text = ""
+        ingredients?.text = ""
+        recipeImage?.image = UIImage(named:"default.jpeg")
         tabBarController?.selectedIndex = 0
     }
     

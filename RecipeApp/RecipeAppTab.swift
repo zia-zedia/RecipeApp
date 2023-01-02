@@ -19,6 +19,9 @@ class RecipeAppTab: UITabBarController {
         
         guard let nextVC2 = self.viewControllers?[1] as? AddRecipe else{return}
         nextVC2.user = user;
+        
+        guard let nextVC3 = self.viewControllers?[3] as? ProfilePage else{return}
+        nextVC3.user = user;
     }
 
     /*

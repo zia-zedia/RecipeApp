@@ -25,12 +25,18 @@ class EditRecipe: UITableViewController, UINavigationControllerDelegate, UIImage
         
         
     }
-    
+    func getSavedImage(named: String) -> UIImage? {
+        if let dir = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) {
+            return UIImage(contentsOfFile: URL(fileURLWithPath: dir.absoluteString).appendingPathComponent(named).path)
+        }
+        return nil
+    }
     
     
     var recipeImage: UIImageView? = nil;
     var categoryBtn: UIButton? = nil;
     var submitBtn: UIButton? = nil;
+    var deleteBtn: UIButton? = nil;
     var recipeName: UITextField? = nil;
     var calories: UITextField? = nil;
     var fats: UITextField? = nil;
@@ -67,31 +73,22 @@ class EditRecipe: UITableViewController, UINavigationControllerDelegate, UIImage
                   present(imagePicker, animated: true, completion: nil)
           }
     }
-    @objc func categorytBtnTapped(sender: UITapGestureRecognizer) {
+    @objc func deleteBtnTapped(sender: UITapGestureRecognizer) {
         guard let userId = user?.userId else{return}
-        let alert = UIAlertController(
-            title: nil,
-            message: nil,
-            preferredStyle: .actionSheet
-        )
         let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let archiveURL = documentDirectory.appendingPathComponent("categories_"+userId).appendingPathExtension("plist")
+        let archiveURL = documentDirectory.appendingPathComponent("Recipe_"+recipe!.category+"_"+userId).appendingPathExtension("plist")
         let propertyDecoder = PropertyListDecoder()
-        guard let retrievedCategories = try? Data(contentsOf: archiveURL),
-              let decodedCategories = try? propertyDecoder.decode(Array<Category>.self, from: retrievedCategories)else {
+        guard let retrievedRecipes = try? Data(contentsOf: archiveURL),
+              var decodedRecipes = try? propertyDecoder.decode(Array<Recipe>.self, from: retrievedRecipes)else {
                return;
         }
-        for cat in decodedCategories{
-            alert.addAction(
-                .init(title: cat.categoryName, style: .default) { _ in
-                    self.categoryBtn?.setTitle(cat.categoryName, for: .normal)
-                    self.recipe!.category = cat.categoryId;
-                }
-            )
-        }
+        decodedRecipes = decodedRecipes.filter{$0.recipeId != recipe!.recipeId}
         
-
-        present(alert, animated: true)
+        let propertyListEncoder = PropertyListEncoder()
+        let encodedData = try? propertyListEncoder.encode(decodedRecipes)
+        try? encodedData?.write(to: archiveURL, options: .noFileProtection)
+        
+        _ = navigationController?.popViewController(animated: true)
     }
     @objc func submitBtnTapped(sender: UITapGestureRecognizer) {
         guard let userId = user?.userId else{return}
@@ -148,11 +145,16 @@ class EditRecipe: UITableViewController, UINavigationControllerDelegate, UIImage
 
         if(indexPath.row == 0){
             let cell = tableView.dequeueReusableCell(withIdentifier: "EditRecipeImageCell", for: indexPath) as! EditRecipeImageCell
-            cell.recipeImage.image = UIImage(named:recipe!.image)
+            cell.recipeImage.image = getSavedImage(named: recipe!.image)
             recipeImage = cell.recipeImage
             let tapGR = UITapGestureRecognizer(target: self, action: #selector(self.imageTapped))
             recipeImage?.addGestureRecognizer(tapGR)
             recipeImage?.isUserInteractionEnabled = true
+            
+            deleteBtn = cell.deleteBtn
+            let tapGR2 = UITapGestureRecognizer(target: self, action: #selector(self.deleteBtnTapped))
+               deleteBtn?.addGestureRecognizer(tapGR2)
+                deleteBtn?.isUserInteractionEnabled = true
             
             return cell
         }else if(indexPath.row == 1){

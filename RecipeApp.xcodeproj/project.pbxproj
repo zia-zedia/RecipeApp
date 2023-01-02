@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -41,6 +41,8 @@
 		D183C024295CF5750079BED2 /* EditRecipeInstructionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D183C023295CF5750079BED2 /* EditRecipeInstructionsCell.swift */; };
 		D183C026295F9C640079BED2 /* addRecipeSubmitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D183C025295F9C640079BED2 /* addRecipeSubmitCell.swift */; };
 		D183C0282961F36E0079BED2 /* EditRecipeSubmitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D183C0272961F36E0079BED2 /* EditRecipeSubmitCell.swift */; };
+		D1A8E5522962477700796B31 /* ProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A8E5512962477600796B31 /* ProfilePage.swift */; };
+		D1C88922296231490050CAB0 /* EditSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C88921296231490050CAB0 /* EditSettings.swift */; };
 		D1DC22DB2954C7A200FA18DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DC22DA2954C7A200FA18DA /* AppDelegate.swift */; };
 		D1DC22DD2954C7A200FA18DA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DC22DC2954C7A200FA18DA /* SceneDelegate.swift */; };
 		D1DC22E22954C7A200FA18DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1DC22E02954C7A200FA18DA /* Main.storyboard */; };
@@ -83,6 +85,8 @@
 		D183C023295CF5750079BED2 /* EditRecipeInstructionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRecipeInstructionsCell.swift; sourceTree = "<group>"; };
 		D183C025295F9C640079BED2 /* addRecipeSubmitCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addRecipeSubmitCell.swift; sourceTree = "<group>"; };
 		D183C0272961F36E0079BED2 /* EditRecipeSubmitCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRecipeSubmitCell.swift; sourceTree = "<group>"; };
+		D1A8E5512962477600796B31 /* ProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
+		D1C88921296231490050CAB0 /* EditSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSettings.swift; sourceTree = "<group>"; };
 		D1DC22D72954C7A200FA18DA /* RecipeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RecipeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1DC22DA2954C7A200FA18DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D1DC22DC2954C7A200FA18DA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -162,6 +166,8 @@
 				D183C023295CF5750079BED2 /* EditRecipeInstructionsCell.swift */,
 				D183C025295F9C640079BED2 /* addRecipeSubmitCell.swift */,
 				D183C0272961F36E0079BED2 /* EditRecipeSubmitCell.swift */,
+				D1C88921296231490050CAB0 /* EditSettings.swift */,
+				D1A8E5512962477600796B31 /* ProfilePage.swift */,
 			);
 			path = RecipeApp;
 			sourceTree = "<group>";
@@ -202,7 +208,7 @@
 				};
 			};
 			buildConfigurationList = D1DC22D22954C7A200FA18DA /* Build configuration list for PBXProject "RecipeApp" */;
-			compatibilityVersion = "Xcode 12.0";
+			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -238,6 +244,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D183C014295CF4860079BED2 /* EditRecipeNameCell.swift in Sources */,
+				D1C88922296231490050CAB0 /* EditSettings.swift in Sources */,
 				D1DC22DB2954C7A200FA18DA /* AppDelegate.swift in Sources */,
 				D13246CC295B4D2E0055D823 /* UserLogin.swift in Sources */,
 				D183C0282961F36E0079BED2 /* EditRecipeSubmitCell.swift in Sources */,
@@ -256,6 +263,7 @@
 				D183C00C295CF4310079BED2 /* EditRecipe.swift in Sources */,
 				D13246C22959F54E0055D823 /* User.swift in Sources */,
 				D13246CE295B5E3D0055D823 /* UserSignUp.swift in Sources */,
+				D1A8E5522962477700796B31 /* ProfilePage.swift in Sources */,
 				D183C026295F9C640079BED2 /* addRecipeSubmitCell.swift in Sources */,
 				D183C008295CD0930079BED2 /* RecipeAppNav.swift in Sources */,
 				D183C018295CF4B10079BED2 /* EditRecipeCategoryCell.swift in Sources */,
@@ -422,10 +430,11 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RecipeApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -449,10 +458,11 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RecipeApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

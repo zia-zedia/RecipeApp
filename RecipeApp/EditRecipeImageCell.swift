@@ -14,6 +14,7 @@ class EditRecipeImageCell: UITableViewCell {
         // Initialization code
     }
 
+    @IBOutlet weak var deleteBtn: UIButton!
     @IBOutlet weak var recipeImage: UIImageView!
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

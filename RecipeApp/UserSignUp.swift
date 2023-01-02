@@ -61,14 +61,14 @@ class UserSignUp: UIViewController {
                 self.present(alert, animated: true, completion: nil)
                 return;
             }
-            print("hello1")
+            
             if(passwordStr.count < 8){
                 let alert = UIAlertController(title: "Error", message: "Password must be at least 8 characters long", preferredStyle: UIAlertController.Style.alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
                 return;
             }
-            print("hello2")
+            
             let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
             let archiveURL = documentDirectory.appendingPathComponent("users").appendingPathExtension("plist")
             let propertyDecoder = PropertyListDecoder()
@@ -76,23 +76,23 @@ class UserSignUp: UIViewController {
                   var decodedUsers = try? propertyDecoder.decode(Array<User>.self, from: retrievedUsers)else {
                    return;
             }
-            print("hello3")
+            
             let newId = String(UUID().uuidString.split(separator: "-")[0])
-            var user:User = User(userId: newId, userName: userNameStr, userPassword: passwordStr, userBio: "", userImage: "user.png")
+            let user:User = User(userId: newId, userName: userNameStr, userPassword: passwordStr, userBio: "", userImage: "user.png")
             decodedUsers.append(user)
             
             let propertyListEncoder = PropertyListEncoder()
             let encodedData = try? propertyListEncoder.encode(decodedUsers)
             try? encodedData?.write(to: archiveURL, options: .noFileProtection)
-            print("hello4")
+            
             makeCategories(user)
             UserDefaults.standard.set(true, forKey: "signedUp")
             if let destinationVC = segue.destination as? RecipeAppTab {
                 
                 destinationVC.user = user
-                print("hello5 " + user.userName)
+                
             }
-            print("hello6")
+            
             
         }
     }

@@ -42,7 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         func giveId() -> String {
             return String(UUID().uuidString.split(separator: "-")[0])
         }
-        UserDefaults.standard.set(false, forKey: "signedUp")
+        //UserDefaults.standard.set(false, forKey: "signedUp")
         if !signedUp(){
             let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
             var archiveURL = documentsDirectory.appendingPathComponent("categories").appendingPathExtension("plist")
@@ -99,7 +99,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 archiveURL = documentsDirectory.appendingPathComponent("users").appendingPathExtension("plist")
                 
-                var userArr: [User] = [];
+                let userArr: [User] = [];
                 
                 let encodedUserData = try? propertyListEncoder.encode(userArr)
                 try? encodedUserData?.write(to: archiveURL, options: .noFileProtection)
