@@ -15,7 +15,6 @@ List of features with the main developer:
 - Add/Edit new category. Main Dev: Sayed Mohammed Algallaf
 - View recipe details. Main Dev: Sayed Mohammed Algallaf
 - User signup/login page. Main Dev: Sayed Mohammed Algallaf (Additional feature)
-- User profile page. Main Dev: Sayed Mohammed Algallaf (Additional feature)
 
 Changes to the design (relative to the Design Document):
 
